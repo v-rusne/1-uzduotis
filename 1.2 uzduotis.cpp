@@ -113,7 +113,7 @@ int main()
             Eil.GP = accumulate(Eil.pazymiai.begin(), Eil.pazymiai.end(), 0);
             Eil.GP = Eil.GP / Eil.pazymiai.size();
             Eil.GP = Eil.GP*0.4 + Eil.egz*0.6;
-            cout << left << setw(20) << "Vardas" << setw(20) << "Pavardë" << setw(4) << "Galutinis (Vid.)\n";
+            cout << left << setw(20) << "Vardas" << setw(20) << "PavardÃ«" << setw(4) << "Galutinis (Vid.)\n";
             cout << "------------------------------------------------------------------\n";
             cout << left << setw(20) << Eil.Vard << setw(20) << Eil.Pav<<setw(4);
             cout << setprecision(2);
@@ -154,7 +154,7 @@ int main()
 
             Eil.GP = mediana(Eil.pazymiai, Eil.pazymiai.size());
             Eil.GP = Eil.GP*0.4 + Eil.egz*0.6;
-            cout << left << setw(20) << "Vardas" << setw(20) << "Pavardë" << setw(4) << "Galutinis (Med.)\n";
+            cout << left << setw(20) << "Vardas" << setw(20) << "PavardÃ«" << setw(4) << "Galutinis (Med.)\n";
             cout << "------------------------------------------------------------------\n";
             cout << left << setw(20) << Eil.Vard << setw(20) << Eil.Pav << setw(4);
             cout << setprecision(2);
