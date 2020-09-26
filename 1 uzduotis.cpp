@@ -4,7 +4,6 @@
 #include<iomanip> /*setprecision, setw*/
 #include<bits/stdc++.h> /*accumulate, nth_element*/
 #include<stdlib.h> /*EXIT_FAILURE*/
-#include <algorithm>
 
 using std::cout;
 using std::cin;
@@ -21,17 +20,10 @@ using std::any_of;
 using std::isdigit;
 
 struct duomuo {
-    string Vard;
-    string Pav;
-    int paz;
-    int egz;
-    float GP=0;
-    string tipas;
-    string Vid="Vidurkis";
-    string Med="Mediana";
-    string vid="vidurkis";
-    string med="mediana";
+    string Vard, Pav;
+    float egz, paz;
     vector<int> pazymiai;
+    float GP=0;
 };
 
 
@@ -48,8 +40,7 @@ double mediana(vector<int> a, int m){
     }
 }
 
-bool yra_skaicius(string s)
-{
+bool yra_skaicius(string s){
     for (int i = 0; i < s.length(); i++)
         if (isdigit(s[i]) == false)
             return false;
@@ -61,17 +52,22 @@ bool yra_skaicius(string s)
 int main()
 {
     duomuo Eil;
-    string n;
+    std::vector <duomuo> Eil_vect;
+    int stud;
+    string n, Vid="Vidurkis", Med="Mediana", vid="vidurkis", med="mediana", tipas;
     cout << "Ar norite, kad mokinio balai( egzamino ir namu darbu) butu generuojami atsitiktinai?\n";
     cin >> n;
     if (n == "Ne" || n == "ne"){
-        cout << "Iveskite kaip bus skaiciuojamas galutinis balas (Vidurkis/Mediana):\n";
-        cin >> Eil.tipas;
 
+        cout << "Iveskite kaip bus skaiciuojamas galutinis balas (Vidurkis/Mediana):\n";
+        cin >> tipas;
+        cout << "Iveskite, kiek studentu noresite irasyti?\n";
+        cin >> stud;
 
         /*Kai pasirenkamas galutinis balas isvestas is vidurkio*/
-        if (Eil.tipas.compare(Eil.Vid) == 0 || Eil.tipas.compare(Eil.vid) == 0){
-            cout << "Iveskite eilutes duomenis (Vardas, pavarde, egzamino rezultatas, semestro pazymiai):\n";
+        if (tipas.compare(Vid) == 0 || tipas.compare(vid) == 0){
+            cout << "Iveskite eilutes duomenis (Vardas, pavarde, egzamino rezultatas, semestro pazymiai):\n *Irase visus pazymius, iveskite '000' ir paspauskite 'Enter'\n";
+            for (int i = 0; i < stud; i++){
             cin >> Eil.Vard >> Eil.Pav >> Eil.egz;
             try{
                 if (yra_skaicius(Eil.Vard) || yra_skaicius(Eil.Pav)){
@@ -82,9 +78,6 @@ int main()
                 cout << vpr.what();
                 exit(EXIT_FAILURE);
             }
-
-
-
             try {
                 if(Eil.egz < 1 || Eil.egz > 10){
                     throw invalid_argument("Netinkama egzamino rezultato reiksme!");
@@ -113,19 +106,24 @@ int main()
             Eil.GP = accumulate(Eil.pazymiai.begin(), Eil.pazymiai.end(), 0);
             Eil.GP = Eil.GP / Eil.pazymiai.size();
             Eil.GP = Eil.GP*0.4 + Eil.egz*0.6;
-            cout << left << setw(20) << "Vardas" << setw(20) << "Pavardë" << setw(4) << "Galutinis (Vid.)\n";
+
+            Eil_vect.push_back(Eil);
+}
+            cout << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Vid.)\n";
             cout << "------------------------------------------------------------------\n";
-            cout << left << setw(20) << Eil.Vard << setw(20) << Eil.Pav<<setw(4);
+
+            for (int j=0; j<stud; j++){
+            cout << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
             cout << setprecision(2);
-            cout << Eil.GP << endl;
-        }
+            cout << Eil_vect[j].GP << endl;
+        }}
 
 
         /*Pasirenkamas galutinio balo skaiciavimas naudojant mediana*/
-        else if (Eil.tipas.compare(Eil.Med) == 0 || Eil.tipas.compare(Eil.med) == 0){
-            cout << "Iveskite eilutes duomenis (Vardas, pavarde, egzamino rezultatas, semestro pazymiai):\n";
+        else if (tipas.compare(Med) == 0 || tipas.compare(med) == 0){
+            cout << "Iveskite eilutes duomenis (Vardas, pavarde, egzamino rezultatas, semestro pazymiai):\n *Irase visus pazymius, iveskite '000' ir paspauskite 'Enter'\n";
+            for (int i = 0; i < stud; i++){
             cin >> Eil.Vard >> Eil.Pav >> Eil.egz;
-
             try {
                 if(Eil.egz < 1 || Eil.egz > 10){
                     throw invalid_argument("Netinkama egzamino rezultato reiksme!");
@@ -154,13 +152,16 @@ int main()
 
             Eil.GP = mediana(Eil.pazymiai, Eil.pazymiai.size());
             Eil.GP = Eil.GP*0.4 + Eil.egz*0.6;
+            Eil_vect.push_back(Eil);
+            }
             cout << left << setw(20) << "Vardas" << setw(20) << "Pavardë" << setw(4) << "Galutinis (Med.)\n";
             cout << "------------------------------------------------------------------\n";
-            cout << left << setw(20) << Eil.Vard << setw(20) << Eil.Pav << setw(4);
+            for (int j=0; j<stud; j++){
+            cout << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
             cout << setprecision(2);
-            cout << Eil.GP << endl;
+            cout << Eil_vect[j].GP << endl;
         }
-
+        }
 
         else{
             try{
@@ -170,22 +171,25 @@ int main()
                 cout << tr.what();
             }
         }
-    }
 
+    }
 
     else{
         int r;
-        cout << "Kiek rezultatu norite sugeneruoti?\n";
+        cout << "Iveskite, kiek studentu noresite irasyti?\n";
+        cin >> stud;
+        cout << "Kiek pazymiu rezultatu norite sugeneruoti?\n";
         cin >> r;
         srand((unsigned) time(0));
-        int random;
+        int randomp, randome;
         cout << "Iveskite kaip bus skaiciuojamas galutinis balas (Vidurkis/Mediana):\n";
-        cin >> Eil.tipas;
+        cin >> tipas;
 
 
         /*Kai pasirenkamas galutinis balas isvestas is vidurkio*/
-        if (Eil.tipas.compare(Eil.Vid) == 0 || Eil.tipas.compare(Eil.vid) == 0){
-            cout << "Iveskite eilutes duomenis (Vardas, pavarde):\n";
+        if (tipas.compare(Vid) == 0 || tipas.compare(vid) == 0){
+            cout << "Iveskite eilutes duomenis (Vardas, pavarde):\n *Irase visus duomenis paspauskite 'Enter'\n";
+            for (int i = 0; i < stud; i++){
             cin >> Eil.Vard >> Eil.Pav;
 
             try{
@@ -198,25 +202,38 @@ int main()
                 exit(EXIT_FAILURE);
             }
 
+            for (int i = 0; i < 1; i++){
+                randome = (rand() % 10) + 1;
+                Eil.egz = randome;
+            }
+
             for (int i = 0; i < r; i++){
-                random = (rand() % 10) + 1;
-                Eil.pazymiai.push_back(random);
+                randomp = (rand() % 10) + 1;
+                Eil.pazymiai.push_back(randomp);
             }
 
             Eil.GP = accumulate(Eil.pazymiai.begin(), Eil.pazymiai.end(), 0);
             Eil.GP = Eil.GP / Eil.pazymiai.size();
             Eil.GP = Eil.GP*0.4 + Eil.egz*0.6;
+            Eil_vect.push_back(Eil);
+            }
+
             cout << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Vid.)\n";
             cout << "------------------------------------------------------------------\n";
-            cout << left << setw(20) << Eil.Vard << setw(20) << Eil.Pav << setw(4);
+
+            for (int j=0; j<stud; j++){
+            cout << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
             cout << setprecision(2);
-            cout << Eil.GP <<endl;
-    }
+            cout << Eil_vect[j].GP << endl;
+        }
+        }
+
 
 
         /*Pasirenkamas galutinio balo skaiciavimas naudojant mediana*/
-        else if (Eil.tipas.compare(Eil.Med) == 0 || Eil.tipas.compare(Eil.med) == 0){
-            cout << "Iveskite eilutes duomenis (Vardas, pavarde):\n";
+        else if (tipas.compare(Med) == 0 || tipas.compare(med) == 0){
+            cout << "Iveskite eilutes duomenis (Vardas, pavarde):\n *Irase visus duomenis paspauskite 'Enter'\n";
+            for (int i = 0; i < stud; i++){
             cin >> Eil.Vard >> Eil.Pav;
 
             try{
@@ -229,20 +246,30 @@ int main()
                 exit(EXIT_FAILURE);
             }
 
+            for (int i = 0; i < 1; i++){
+                randome = (rand() % 10) + 1;
+                Eil.egz = randome;
+            }
+
             for (int i = 0; i < r; i++) {
-                random = (rand() % 10) + 1;
-                Eil.pazymiai.push_back(random);
+                randomp = (rand() % 10) + 1;
+                Eil.pazymiai.push_back(randomp);
             }
 
             Eil.GP=mediana(Eil.pazymiai, Eil.pazymiai.size());
             Eil.GP=Eil.GP*0.4 + Eil.egz*0.6;
-            cout << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Med.)\n";
-            cout << "------------------------------------------------------------------\n";
-            cout << left << setw(20) << Eil.Vard << setw(20) << Eil.Pav << setw(4);
-            cout << setprecision(2);
-            cout << Eil.GP << endl;
-        }
+            Eil_vect.push_back(Eil);
+            }
 
+            cout << "------------------------------------------------------------------\n";
+            cout << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Med.)\n";
+
+            for (int j=0; j<stud; j++){
+            cout << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
+            cout << setprecision(2);
+            cout << Eil_vect[j].GP << endl;
+        }
+        }
 
         else {
             try{
