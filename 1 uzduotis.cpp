@@ -1,55 +1,5 @@
-#include <iostream>
-#include<string>
-#include<vector>
-#include<iomanip> /*setprecision, setw*/
-#include<bits/stdc++.h> /*accumulate, nth_element*/
-#include<stdlib.h> /*EXIT_FAILURE*/
-#include<fstream>
-
-using std::cout;
-using std::cin;
-using std::string;
-using std::vector;
-using std::invalid_argument;
-using std::setw;
-using std::right;
-using std::left;
-using std::accumulate;
-using std::endl;
-using std::setprecision;
-using std::any_of;
-using std::isdigit;
-using std::fstream;
-
-struct duomuo {
-    string Vard, Pav;
-    int egz, paz;
-    vector<int> pazymiai;
-    float GP=0, gp=0;
-};
-
-
-double mediana(vector<int> a, int m){
-    if (m%2 == 0){
-        nth_element(a.begin(),a.begin()+m/2,a.end());
-        nth_element(a.begin(),a.begin()+(m-1)/2,a.end());
-        return (double)(a[(m-1)/2]+a[m/2])/2.0;
-    }
-
-    else{
-        nth_element(a.begin(),a.begin()+m/2,a.end());
-        return (double)a[m/2];
-    }
-}
-
-bool yra_skaicius(string s){
-    for (int i = 0; i < s.length(); i++)
-        if (isdigit(s[i]) == false)
-            return false;
-
-    return true;
-}
-
+#include "fun.h"
+#include "struct.h"
 
 int main(){
     duomuo Eil;
@@ -210,7 +160,7 @@ int main(){
                     Eil.GP = Eil.GP*0.4 + Eil.egz*0.6;
                     Eil_vect.push_back(Eil);
                 }
-                cout << left << setw(20) << "Vardas" << setw(20) << "Pavardë" << setw(4) << "Galutinis (Med.)\n";
+                cout << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Med.)\n";
                 cout << "------------------------------------------------------------------\n";
                 for (int j=0; j<stud; j++){
                     cout << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
@@ -359,3 +309,5 @@ int main(){
         }
     }
 }
+
+
