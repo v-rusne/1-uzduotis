@@ -18,12 +18,16 @@ using std::endl;
 using std::setprecision;
 using std::any_of;
 using std::isdigit;
+using std::to_string;
+using std::ofstream;
+using std::ifstream;
 
 struct duomuo {
-    string Vard, Pav;
+    string Vard, Pav, kat;
     float egz, paz;
     vector<int> pazymiai;
     float GP=0;
+
 };
 
 
@@ -54,7 +58,67 @@ int main()
     duomuo Eil;
     std::vector <duomuo> Eil_vect;
     int stud;
-    string n, Vid="Vidurkis", Med="Mediana", vid="vidurkis", med="mediana", tipas;
+    string n, t, pvd, Vid="Vidurkis", Med="Mediana", vid="vidurkis", med="mediana", tipas;
+    cout << "Ar norite generuoti atsitiktinius studentu sarasus?\n";
+    cin >> t;
+    if (t == "Taip" || t == "taip"){
+
+        cout << "Irasykite, kiek eiluciu norite generuoti?\n";
+        cin >> stud;
+        cout << "Irasykite norimo irasyti failo pavadinima (su .txt):\n";
+        cin >> pvd;
+        srand((unsigned) time(0));
+        ofstream failas(pvd);
+
+        for (int i = 0; i<stud; i++){
+            int skaicius = rand();
+            Eil.Vard = "Vardas";
+            Eil.Vard += to_string(skaicius);
+            Eil.Pav = "Pavarde";
+            Eil.Pav += to_string(skaicius);
+            Eil.GP = (rand() % 10) + 1;
+            Eil_vect.push_back(Eil);
+        }
+
+            failas<< left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Vid.)\n";
+            failas << "------------------------------------------------------------------\n";
+
+            for (int j=0; j<stud; j++){
+            failas << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
+            failas << setprecision(2);
+            failas << Eil_vect[j].GP << endl;
+        }
+
+         failas.close();
+
+        string line;
+        ifstream atidarymas(pvd);
+        if (atidarymas.is_open())
+            {
+                while ( getline (atidarymas,line) )
+                {
+                        cout << line << '\n';
+                }
+
+            failas<< left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(4) << "Galutinis (Vid.)" << setw(20) << "Kategorija\n");
+            failas << "-------------------------------------------------------------------------\n";
+            for (int j=0; j<stud; j++){
+            failas << left << setw(20) << Eil_vect[j].Vard << setw(20) << Eil_vect[j].Pav << setw(4);
+            failas << setprecision(2);
+            failas << Eil_vect[j].GP<<endl;
+
+        }
+
+
+        }
+    atidarymas.close();
+  }
+
+  else cout << "Nera tokio failo!";
+
+  return 0;
+    }
+    else{
     cout << "Ar norite, kad mokinio balai( egzamino ir namu darbu) butu generuojami atsitiktinai?\n";
     cin >> n;
     if (n == "Ne" || n == "ne"){
@@ -281,3 +345,5 @@ int main()
         }
     }
 }
+}
+
