@@ -9,7 +9,8 @@
 6. Skaito ne vieną eilutę duomenų, bet tiek, kiek darbo pradžioje vartotojas pasirenka;
 7. Duomenis galima skaityti iš tekstinio failo *"kursiokai.txt"*;
 8. Skaitant duomenis iš tekstinio failo galutinis rezultatas išvedamas ir su mediana, ir su vidurkiu.
-9. Generuoja vardus, pavardes, galutinį pažymį ir įrašo į failą, kurio pavadinimą vartotojas pats įrašo su .txt galūne. 
+9. Generuoja vardus, pavardes, galutinį pažymį ir įrašo į failą, kurio pavadinimą vartotojas pats įrašo su .txt galūne;
+10. Sugeneruoti studentai yra skirstomi į *"Vargšiukus"* ir *"Šaunuolius"* bei išvedami atitinkamai į 2 failus: *"vargsiukai.txt"* ir *"saunuoliai.txt"*.
 
 **Error'ai:**
 1. Įvedus vietoje skaičių raides ir *vice versa*;
